@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support My Work</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+        }
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Merci de soutenir mon travail</h1>
+        <p id="location">Vous êtes actuellement situé à :</p>
+        <button onclick="window.location.href='https://www.patreon.com/TONPATREON'">Visitez ma page Patreon</button>
+    </div>
+
+    <script>
+        // Tentative de détection de la localisation via l'API Geolocation du navigateur
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                document.getElementById("location").innerHTML = "La géolocalisation n'est pas supportée par ce navigateur.";
+            }
+        }
+
+        function showPosition(position) {
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+            document.getElementById("location").innerHTML = `Lat: ${lat} , Lon: ${lon}`;
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    document.getElementById("location").innerHTML = "La géolocalisation a été refusée.";
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    document.getElementById("location").innerHTML = "Les informations de localisation ne sont pas disponibles.";
+                    break;
+                case error.TIMEOUT:
+                    document.getElementById("location").innerHTML = "Le délai d'obtention de la localisation a expiré.";
+                    break;
+                case error.UNKNOWN_ERROR:
+                    document.getElementById("location").innerHTML = "Une erreur inconnue s'est produite.";
+                    break;
+            }
+        }
+
+        getLocation();
+    </script>
+</body>
+</html>
